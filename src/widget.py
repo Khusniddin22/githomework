@@ -24,3 +24,9 @@ def mask_account_card(type_and_account_card: str) -> str:
                 mask_account += account_card[i]
 
     return type_name + mask_account
+
+def get_date(long_date: str) -> str:
+    """Функция возвращает дату в формате 'ДД.ММ.ГГГГ' """
+    correct_date = long_date[8:10] + '.' + long_date[5:7] + '.' + long_date[:4]
+    return correct_date
+
