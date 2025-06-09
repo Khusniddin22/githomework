@@ -1,9 +1,12 @@
+from masks import get_mask_card_number
+from masks import get_mask_account
+
+
 def mask_account_card(type_and_account_card: str) -> str:
     """Функция принимает номер карты или счета и возвращает замаскированный номер"""
     account_card = ""
     mask_account = ""
     type_name = ""
-    count_digit = 0
     for symbol in type_and_account_card:  # отбрасываем тип и оставляем только номер
         if symbol.isdigit():
             account_card += symbol
@@ -11,17 +14,9 @@ def mask_account_card(type_and_account_card: str) -> str:
             type_name += symbol
 
     if len(account_card) == 20:  # проверка на номер счета
-        mask_account = "**" + account_card[-4:]
+        mask_account = get_mask_account(int(account_card))
     else:  # иначе это номер карты
-        for i in range(len(account_card)):
-            count_digit += 1
-            if count_digit == 5:
-                mask_account += " "
-                count_digit = 1
-            if i >= 6 and i <= 11:
-                mask_account += "*"
-            else:
-                mask_account += account_card[i]
+        mask_account = get_mask_card_number(int(account_card))
 
     return type_name + mask_account
 
