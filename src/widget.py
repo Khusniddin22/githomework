@@ -1,11 +1,9 @@
-from masks import get_mask_card_number
-from masks import get_mask_account
+from masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(type_and_account_card: str) -> str:
     """Функция принимает номер карты или счета и возвращает замаскированный номер"""
     account_card = ""
-    mask_account = ""
     type_name = ""
     for symbol in type_and_account_card:  # отбрасываем тип и оставляем только номер
         if symbol.isdigit():
@@ -18,10 +16,13 @@ def mask_account_card(type_and_account_card: str) -> str:
     else:  # иначе это номер карты
         mask_account = get_mask_card_number(int(account_card))
 
-    return type_name + mask_account
+    return str(type_name + mask_account)
 
 
 def get_date(long_date: str) -> str:
     """Функция возвращает дату в формате 'ДД.ММ.ГГГГ'"""
     correct_date = long_date[8:10] + "." + long_date[5:7] + "." + long_date[:4]
     return correct_date
+
+
+print(mask_account_card("Visa Platinum 8990922113665229"))
