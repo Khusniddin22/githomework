@@ -1,7 +1,6 @@
-from mypy.state import state
-
-
-def filter_by_state(list_of_dict: list[dict], state='EXECUTED')->list:
+from src.widget import get_date
+from typing import List, Dict
+def filter_by_state(list_of_dict: List[Dict], state='EXECUTED')->List[Dict]:
     """Функция возвращает отфильтрованный список словарей, у которых ключ state соответствует указанному значению"""
     filtered_list = []
     for dictionary in list_of_dict:
@@ -10,5 +9,9 @@ def filter_by_state(list_of_dict: list[dict], state='EXECUTED')->list:
                 filtered_list.append(dictionary)
     return filtered_list
 
-print(filter_by_state([{'id': 41428829, 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
-, state='CANCELED'))
+
+def sort_by_date(list_of_dict: List[Dict], desc=True)->List[Dict]:
+    """Функция возвращает отсортированный список по заданной дате"""
+    sorted_list = sorted(list_of_dict, key=lambda x: x['date'], reverse=desc)
+    return sorted_list
+

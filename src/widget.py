@@ -25,4 +25,3 @@ def get_date(long_date: str) -> str:
     return correct_date
 
 
-print(mask_account_card("Visa Platinum 8990922113665229"))
