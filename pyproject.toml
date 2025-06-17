@@ -22,7 +22,7 @@ black = "^25.1.0"
 isort = "^6.0.1"
 
 [tool.black]
-line-length = 78
+line-length = 100
 exclude = '.git'
 
 [tool.mypy]
