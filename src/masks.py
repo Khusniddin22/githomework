@@ -17,6 +17,9 @@ def get_mask_card_number(card_number: int) -> str:
 
 def get_mask_account(account_number: int) -> str:
     """Функция маскирует номер счета и и отображает в формате **XXXX"""
-    account_number_str = str(account_number)
-    mask_account_number = "**" + account_number_str[-4:]
-    return mask_account_number
+    if len(str(account_number)) == 20:
+        account_number_str = str(account_number)
+        mask_account_number = "**" + account_number_str[-4:]
+        return mask_account_number
+    else:
+        return None
