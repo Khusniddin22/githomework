@@ -3,16 +3,19 @@ def get_mask_card_number(card_number: int) -> str:
     card_number_str = str(card_number)
     mask_card_nuber = ""
     count_number = 0
-    for i in range(len(card_number_str)):
-        count_number += 1
-        if count_number == 5:
-            mask_card_nuber += " "
-            count_number = 1
-        if i >= 6 and i <= 11:
-            mask_card_nuber += "*"
-        else:
-            mask_card_nuber += card_number_str[i]
-    return mask_card_nuber
+    if len(card_number_str) == 16:
+        for i in range(len(card_number_str)):
+            count_number += 1
+            if count_number == 5:
+                mask_card_nuber += " "
+                count_number = 1
+            if i >= 6 and i <= 11:
+                mask_card_nuber += "*"
+            else:
+                mask_card_nuber += card_number_str[i]
+        return mask_card_nuber
+    else:
+        return 'Неправильно набран номер карты'
 
 
 def get_mask_account(account_number: int) -> str:
@@ -23,3 +26,5 @@ def get_mask_account(account_number: int) -> str:
         return mask_account_number
     else:
         return None
+
+print(get_mask_card_number(7000792289606361))
