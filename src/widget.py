@@ -1,4 +1,6 @@
-from masks import get_mask_account, get_mask_card_number
+from calendar import month
+
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(type_and_account_card: str) -> str:
@@ -14,17 +16,27 @@ def mask_account_card(type_and_account_card: str) -> str:
 
     if len(account_card) == 20:  # проверка на номер счета
         mask_account = get_mask_account(int(account_card))
-    else:  # иначе это номер карты
+    elif len(account_card) == 16:  # иначе это номер карты
         mask_account = get_mask_card_number(int(account_card))
-
+    else:
+        if type_name == 'Счет ':
+            return 'Неправильно набран номер счета'
+        else:
+            return 'Неправильно набран номер карты'
     return str(type_name + mask_account)
 
 
 def get_date(long_date: str) -> str:
     """Функция возвращает дату в формате 'ДД.ММ.ГГГГ'"""
-    correct_date = long_date[8:10] + "." + long_date[5:7] + "." + long_date[:4]
+    day = long_date[8:10]
+    month = long_date[5:7]
+    year = long_date[:4]
+    if not day.isdigit() or not month.isdigit() or not year.isdigit():
+        raise ValueError("Неправильный формат даты")
+    if day.isdigit() or month.isdigit() or year.isdigit():
+        if int(day) < 1 or int(month) > 13 or int(day) > 31:
+            raise ValueError("Неправильный формат даты")
+    correct_date = day + "." + month + "." + year
     return correct_date
 
 
-masked_account = mask_account_card("Счет 73654108430135874305")
-print(masked_account)
