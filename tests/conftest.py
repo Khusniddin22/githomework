@@ -18,3 +18,10 @@ def account_short():
 def card_short():
     return 'Неправильно набран номер карты'
 
+@pytest.fixture
+def identical_dates():
+    return [
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+    ]
