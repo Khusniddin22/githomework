@@ -15,7 +15,7 @@ def get_mask_card_number(card_number: int) -> str:
                 mask_card_nuber += card_number_str[i]
         return mask_card_nuber
     else:
-        return 'Неправильно набран номер карты'
+        return "Неправильно набран номер карты"
 
 
 def get_mask_account(account_number: int) -> str:
@@ -26,5 +26,6 @@ def get_mask_account(account_number: int) -> str:
         return mask_account_number
     else:
         return None
+
 
 print(get_mask_card_number(7000792289606361))

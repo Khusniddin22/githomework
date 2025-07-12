@@ -1,5 +1,3 @@
-from calendar import month
-
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -19,10 +17,10 @@ def mask_account_card(type_and_account_card: str) -> str:
     elif len(account_card) == 16:  # иначе это номер карты
         mask_account = get_mask_card_number(int(account_card))
     else:
-        if type_name == 'Счет ':
-            return 'Неправильно набран номер счета'
+        if type_name == "Счет ":
+            return "Неправильно набран номер счета"
         else:
-            return 'Неправильно набран номер карты'
+            return "Неправильно набран номер карты"
     return str(type_name + mask_account)
 
 
@@ -38,5 +36,3 @@ def get_date(long_date: str) -> str:
             raise ValueError("Неправильный формат даты")
     correct_date = day + "." + month + "." + year
     return correct_date
-
-
