@@ -110,3 +110,73 @@ def test_mask_account_card_type_account(type_account):
 def test_filter_by_state(list_of_dicts, state, result_list):
     assert filter_by_state(list_of_dicts, state) == result_list
 ```
+
+## Генераторы списков
+Были созданы и протестированы функции-генераторы и генераторные выражения
+
+###Примеры использования:
+
+1. filter_by_currency, которая принимает на вход список словарей, представляющих транзакции.
+
+```
+for _ in range(2):
+    print(next(usd_transactions))
+
+>>> {
+          "id": 939719570,
+          "state": "EXECUTED",
+          "date": "2018-06-30T02:08:58.425572",
+          "operationAmount": {
+              "amount": "9824.07",
+              "currency": {
+                  "name": "USD",
+                  "code": "USD"
+              }
+          },
+          "description": "Перевод организации",
+          "from": "Счет 75106830613657916952",
+          "to": "Счет 11776614605963066702"
+      }
+      {
+              "id": 142264268,
+              "state": "EXECUTED",
+              "date": "2019-04-04T23:20:05.206878",
+              "operationAmount": {
+                  "amount": "79114.93",
+                  "currency": {
+                      "name": "USD",
+                      "code": "USD"
+                  }
+              },
+              "description": "Перевод со счета на счет",
+              "from": "Счет 19708645243227258542",
+              "to": "Счет 75651667383060284188"
+       }
+```
+
+2. transaction_descriptions, который принимает список словарей с транзакциями и возвращает описание каждой операции по очереди.
+
+```
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+
+>>> Перевод организации
+    Перевод со счета на счет
+    Перевод со счета на счет
+    Перевод с карты на карту
+    Перевод организации
+```
+
+3. card_number_generator, который выдает номера банковских карт в формате XXXX XXXX XXXX XXXX, где X — цифра номера карты. Генератор может сгенерировать номера карт в заданном диапазоне от 0000 0000 0000 0001 до 9999 9999 9999 9999.
+
+```
+for card_number in card_number_generator(1, 5):
+    print(card_number)
+
+>>> 0000 0000 0000 0001
+    0000 0000 0000 0002
+    0000 0000 0000 0003
+    0000 0000 0000 0004
+    0000 0000 0000 0005
+```
