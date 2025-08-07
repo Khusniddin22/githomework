@@ -37,6 +37,10 @@ pip-log.txt
 pip-delete-this-directory.txt
 mylog.txt
 
+# dotenv
+src/.env
+
+
 # Unit test / coverage reports
 #htmlcov/
 #.tox/
@@ -130,7 +134,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+src/.env
 .venv
 env/
 venv/
