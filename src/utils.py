@@ -2,6 +2,10 @@ import json
 
 
 def financial_transactions(path_file: str) -> list:
+    """
+    Функция, которая принимает на вход путь до JSON-файла и
+    возвращает список словарей с данными о финансовых транзакциях.
+    """
     try:
         with open(path_file, "r", encoding="utf-8") as f_tr:
             if f_tr is None:
