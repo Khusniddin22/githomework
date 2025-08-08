@@ -1,8 +1,11 @@
+import os
 from unittest.mock import patch
 
 from src.utils import financial_transactions
 
-file_path = r"C:\Users\79623\Desktop\home_work\githomework\data\operations.json"
+test_file_path = os.path.dirname(os.path.abspath(__file__))
+root_path = os.path.dirname(os.path.abspath(test_file_path))
+file_path = os.path.join(root_path, "data", "operations.json")
 
 
 @patch("src.utils.json.load")

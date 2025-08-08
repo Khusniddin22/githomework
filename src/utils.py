@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def financial_transactions(path_file: str) -> list:
@@ -17,6 +18,13 @@ def financial_transactions(path_file: str) -> list:
         return []
 
 
-abs_path_file = r"C:\Users\79623\Desktop\home_work\githomework\data\operations.json"
+# получаем абсолютный путь к директории, содержащей utils.py
+utils_path = os.path.dirname(os.path.abspath(__file__))
+
+# получаем путь на 2 уровня выше чем utils файл
+project_root_path = os.path.dirname(os.path.abspath(utils_path))
+
+# объединяем путь к корню проекта с путем к файлу operations.json
+abs_path_file = os.path.join(project_root_path, "data", "operations.json")
 
 print(financial_transactions(abs_path_file))
