@@ -4,11 +4,11 @@ import logging
 
 
 logger_utils = logging.getLogger('utils')
-logger_utils.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('logs/utils.log')
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(file_formatter)
-logger_utils.addHandler(file_handler)
+logger_utils.setLevel(logging.DEBUG) # Устанавливаем уровень логирования
+file_handler = logging.FileHandler('logs/utils.log') # Указываем путь к файлу логов
+file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') # Формат логов
+file_handler.setFormatter(file_formatter)  # Устанавливаем форматтер для обработчика
+logger_utils.addHandler(file_handler)  # Добавляем обработчик к логгеру
 
 
 def financial_transactions(path_file: str) -> list:
@@ -16,11 +16,14 @@ def financial_transactions(path_file: str) -> list:
     Функция, которая принимает на вход путь до JSON-файла и
     возвращает список словарей с данными о финансовых транзакциях.
     """
+    logger_utils.debug(f"Вызвана функция financial_transactions с аргументом: {path_file}")  # Логируем вызов функции
+
     try:
         with open(path_file, "r", encoding="utf-8") as f_tr:
             if f_tr is None:
+                data = json.load(f_tr)
                 logger_utils.warning(f'Файл {path_file} не открыт. Возвращается пустой список."')
-                return []
+                return data
             else:
                 data = json.load(f_tr)
                 logger_utils.info(f"Файл {path_file} успешно загружен.")
