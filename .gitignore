@@ -35,21 +35,26 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+mylog.txt
+
+# dotenv
+src/.env
+
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+#htmlcov/
+#.tox/
+#.nox/
+#.coverage
+#.coverage.*
+#.cache
+#nosetests.xml
+#coverage.xml
+#*.cover
+#*.py,cover
+#.hypothesis/
+#.pytest_cache/
+#cover/
 
 # Translations
 *.mo
@@ -129,7 +134,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+src/.env
 .venv
 env/
 venv/
