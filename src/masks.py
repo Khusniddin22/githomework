@@ -1,12 +1,9 @@
-import json
-import os
 import logging
 
-
-logger_masks = logging.getLogger('masks')
-logger_masks.setLevel(logging.DEBUG) # Устанавливаем уровень логирования
-file_handler = logging.FileHandler('logs/masks.log') # Указываем путь к файлу логов
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') # Формат логов
+logger_masks = logging.getLogger("masks")
+logger_masks.setLevel(logging.DEBUG)  # Устанавливаем уровень логирования
+file_handler = logging.FileHandler("logs/masks.log")  # Указываем путь к файлу логов
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")  # Формат логов
 file_handler.setFormatter(file_formatter)  # Устанавливаем форматтер для обработчика
 logger_masks.addHandler(file_handler)  # Добавляем обработчик к логгеру
 

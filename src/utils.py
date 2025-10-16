@@ -1,12 +1,11 @@
 import json
-import os
 import logging
+import os
 
-
-logger_utils = logging.getLogger('utils')
-logger_utils.setLevel(logging.DEBUG) # Устанавливаем уровень логирования
-file_handler = logging.FileHandler('logs/utils.log') # Указываем путь к файлу логов
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') # Формат логов
+logger_utils = logging.getLogger("utils")
+logger_utils.setLevel(logging.DEBUG)  # Устанавливаем уровень логирования
+file_handler = logging.FileHandler("logs/utils.log")  # Указываем путь к файлу логов
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")  # Формат логов
 file_handler.setFormatter(file_formatter)  # Устанавливаем форматтер для обработчика
 logger_utils.addHandler(file_handler)  # Добавляем обработчик к логгеру
 
@@ -29,7 +28,7 @@ def financial_transactions(path_file: str) -> list:
                 logger_utils.info(f"Файл {path_file} успешно загружен.")
                 return data
     except FileNotFoundError:
-        logger_utils.error(f'Файл {path_file} не найден. Возвращается пустой список.')
+        logger_utils.error(f"Файл {path_file} не найден. Возвращается пустой список.")
         return []
     except json.JSONDecodeError:
         logger_utils.error(f"Некорректный формат JSON в файле {path_file}. Возвращается пустой список.")
