@@ -1,5 +1,4 @@
 import csv
-
 import pandas as pd
 import os
 
@@ -7,7 +6,7 @@ import os
 path_csv = os.path.join('..', 'data', 'transactions.csv')
 path_excel = os.path.join('..', 'data', 'transactions_excel.xlsx')
 
-def reading_transactions_csv(file_path_csv: str):
+def reading_transactions_csv(file_path_csv: str) -> list:
     '''Считывает транзакции из CSV файла и возвращает список словарей'''
     try:
         transaction_list_csv = []
@@ -22,10 +21,9 @@ def reading_transactions_csv(file_path_csv: str):
     except FileNotFoundError:
         return []
 
-#print(reading_transactions_csv(path_csv))
+print(reading_transactions_csv(path_csv))
 
-
-def reading_transactions_excel(file_path_excel: str):
+def reading_transactions_excel(file_path_excel: str) -> list:
     '''Считывает транзакции из EXCEL файла и возвращает список словарей'''
     try:
         transactions_list_excel = []
