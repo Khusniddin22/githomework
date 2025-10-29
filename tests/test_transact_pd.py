@@ -3,8 +3,8 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from src.transact_pd import reading_transactions_csv, reading_transactions_excel
-
+from src.transact_pd import (reading_transactions_csv,
+                             reading_transactions_excel)
 
 test_file_path = os.path.dirname(os.path.abspath(__file__))
 root_path = os.path.dirname(os.path.abspath(test_file_path))
