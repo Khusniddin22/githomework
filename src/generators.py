@@ -18,5 +18,5 @@ def card_number_generator(start: int, stop: int):
     """Ф-ия генерирует номера карт в заданном диапазоне"""
     for x in range(start, stop + 1):
         number = f"{x:016d}"
-        formatted_number = " ".join([number[i:i + 4] for i in range(0, 16, 4)])
+        formatted_number = " ".join([number[i : i + 4] for i in range(0, 16, 4)])
         yield formatted_number
