@@ -51,3 +51,6 @@ def reading_transactions_excel(file_path_excel: str) -> list:
     except Exception as e:  # Общая обработка других ошибок
         print(f"Произошла ошибка при чтении Excel файла: {e}")
         return []
+
+
+

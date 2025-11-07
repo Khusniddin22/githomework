@@ -45,3 +45,4 @@ project_root_path = os.path.dirname(os.path.abspath(utils_path))
 abs_path_file = os.path.join(project_root_path, "data", "operations.json")
 
 print(financial_transactions(abs_path_file))
+
