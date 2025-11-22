@@ -42,7 +42,3 @@ def get_date(long_date: str) -> str:
             raise ValueError("Неправильный формат даты")
     correct_date = day + "." + month + "." + year
     return correct_date
-
-p = '0'
-if p.isdigit():
-    print('yes')

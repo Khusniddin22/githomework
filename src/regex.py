@@ -32,10 +32,8 @@ def process_bank_search(data: list[dict], search: str)->list[dict]:
     '''
     list_of_found_transactions = []
     for transaction in data:
-        for value in transaction.values():
-            pattern = re.findall(search, value)
-            if pattern:
-                list_of_found_transactions.append(transaction)
+        if 'description' in transaction and re.search(search, transaction['description']):
+            list_of_found_transactions.append(transaction)
 
     return list_of_found_transactions
 

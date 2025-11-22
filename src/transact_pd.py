@@ -22,8 +22,6 @@ def reading_transactions_csv(file_path_csv: str) -> list:
     except FileNotFoundError:
         return []
 
-print(path_csv)
-print(reading_transactions_csv(path_csv))
 
 
 
