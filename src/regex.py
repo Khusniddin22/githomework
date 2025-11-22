@@ -2,50 +2,26 @@ import re
 from collections import Counter
 
 
-list_transactions = [
-                    {'id': '650703',
-                     'state': 'EXECUTED',
-                      'date': '2023-09-05T11:30:32Z',
-                     'description': 'Перевод организации'
-                      },
-                     {'id': '3598919',
-                      'state': 'EXECUTED',
-                      'date': '2020-12-06T23:00:58Z',
-                      'description': 'Открытие вклада'
-                      },
-                     {'id': '593027',
-                      'state': 'CANCELED',
-                      'date': '2023-07-22T05:02:01Z',
-                      'description': 'Открытие вклада'
-                      },
-                     {'id': '4699552',
-                      'state': 'EXECUTED',
-                      'date': '2022-03-23T08:29:37Z',
-                      'description': 'Перевод организации'
-                      }
-                     ]
-
-def process_bank_search(data: list[dict], search: str)->list[dict]:
-    '''
+def process_bank_search(data: list[dict], search: str) -> list[dict]:
+    """
     Функция, принимающая список словарей с данными о банковских операциях и строку поиска
      и возвращающая список словарей, в описании которых есть данная строка
-    '''
+    """
     list_of_found_transactions = []
     for transaction in data:
-        if 'description' in transaction and re.search(search, transaction['description']):
+        if "description" in transaction and re.search(search, transaction["description"]):
             list_of_found_transactions.append(transaction)
 
     return list_of_found_transactions
 
 
-def process_bank_operations(data: list[dict], categories:list)->dict:
-    '''
+def process_bank_operations(data: list[dict], categories: list) -> dict:
+    """
     Функция, которая принимает список словарей с данными о банковских операциях
     и список категорий операций и возвращает словарь категорий и количество операций в каждой категории
-    '''
+    """
     list_categories = []
     for transaction in data:
-        if transaction['description'] in categories:
-            list_categories.append(transaction['description'])
+        if transaction["description"] in categories:
+            list_categories.append(transaction["description"])
     return Counter(list_categories)
-

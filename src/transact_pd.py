@@ -23,8 +23,6 @@ def reading_transactions_csv(file_path_csv: str) -> list:
         return []
 
 
-
-
 def reading_transactions_excel(file_path_excel: str) -> list:
     """Считывает транзакции из EXCEL файла и возвращает список словарей"""
     try:
@@ -50,6 +48,3 @@ def reading_transactions_excel(file_path_excel: str) -> list:
     except Exception as e:  # Общая обработка других ошибок
         print(f"Произошла ошибка при чтении Excel файла: {e}")
         return []
-
-
-

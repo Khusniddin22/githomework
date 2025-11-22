@@ -30,6 +30,7 @@ def get_mask_card_number(card_number: int) -> str:
         logger_masks.error(f"Неправильно набран номер карты: {card_number}")
         return "Неправильно набран номер карты"
 
+
 def get_mask_card_number_zero(card_number: str) -> str:
     """Функция для маскировки номера карты при первой цифре 0"""
     logger_masks.debug(f"Вызвана get_mask_card_number_zero с аргументом: {card_number}")
@@ -62,6 +63,7 @@ def get_mask_account(account_number: int) -> str:
     else:
         logger_masks.error(f"Неправильная длина номера счета: {account_number}")
         return None
+
 
 def get_mask_account_zero(account_number: str) -> str:
     """Функция маскирует номер счета и и отображает в формате **XXXX (при первой цифре 0)"""
