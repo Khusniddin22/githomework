@@ -8,9 +8,9 @@ from src.transact_pd import (reading_transactions_csv,
 
 test_file_path = os.path.dirname(os.path.abspath(__file__))
 root_path = os.path.dirname(os.path.abspath(test_file_path))
-path_csv = os.path.join(root_path, "data", "transactions.csv")
+path_csv_test = os.path.join(root_path, "data", "transactions.csv")
 
-path_excel = os.path.join("..", "data", "transactions_excel.xlsx")
+path_excel_test = os.path.join("..", "data", "transactions_excel.xlsx")
 
 
 # Тест к функции reading_transactions_csv
@@ -40,7 +40,7 @@ def test_reading_transactions_csv(mock_DictReader):
             "description": "Перевод с карты на карту",
         },
     ]
-    result = reading_transactions_csv(path_csv)
+    result = reading_transactions_csv(path_csv_test)
     assert result == [
         {
             "id": 650703,
@@ -121,6 +121,6 @@ def test_reading_transactions_excel(mock_read_excel):
         },
     ]
 
-    result = reading_transactions_excel(path_excel)
+    result = reading_transactions_excel(path_excel_test)
     assert result == expected_result
-    mock_read_excel.assert_called_once_with(path_excel)
+    mock_read_excel.assert_called_once_with(path_excel_test)

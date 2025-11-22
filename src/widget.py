@@ -1,4 +1,4 @@
-from src.masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number, get_mask_account_zero, get_mask_card_number_zero
 
 
 def mask_account_card(type_and_account_card: str) -> str:
@@ -13,15 +13,21 @@ def mask_account_card(type_and_account_card: str) -> str:
             type_name += symbol
 
     if len(account_card) == 20:  # проверка на номер счета
-        mask_account = get_mask_account(int(account_card))
+        if account_card[0] == '0':
+            mask_account = get_mask_account_zero(account_card)
+        else:
+            mask_account = get_mask_account(int(account_card))
     elif len(account_card) == 16:  # иначе это номер карты
-        mask_account = get_mask_card_number(int(account_card))
+        if account_card[0] == '0':
+            mask_account = get_mask_card_number_zero(account_card)
+        else:
+            mask_account = get_mask_card_number(int(account_card))
     else:
         if type_name == "Счет ":
             return "Неправильно набран номер счета"
         else:
             return "Неправильно набран номер карты"
-    return str(type_name + mask_account)
+    return type_name + str(mask_account)
 
 
 def get_date(long_date: str) -> str:
@@ -36,3 +42,7 @@ def get_date(long_date: str) -> str:
             raise ValueError("Неправильный формат даты")
     correct_date = day + "." + month + "." + year
     return correct_date
+
+p = '0'
+if p.isdigit():
+    print('yes')
