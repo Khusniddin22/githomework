@@ -4,9 +4,10 @@ import os
 
 logger_utils = logging.getLogger("utils")
 logger_utils.setLevel(logging.DEBUG)  # Устанавливаем уровень логирования
+os.makedirs("logs", exist_ok=True)
 file_handler = logging.FileHandler("logs/utils.log")  # Указываем путь к файлу логов
-file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")  # Формат логов
-file_handler.setFormatter(file_formatter)  # Устанавливаем форматтер для обработчика
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(file_formatter)
 logger_utils.addHandler(file_handler)  # Добавляем обработчик к логгеру
 
 
@@ -15,33 +16,32 @@ def financial_transactions(path_file: str) -> list:
     Функция, которая принимает на вход путь до JSON-файла и
     возвращает список словарей с данными о финансовых транзакциях.
     """
-    logger_utils.debug(f"Вызвана функция financial_transactions с аргументом: {path_file}")  # Логируем вызов функции
+    logger_utils.debug(f"Вызвана функция financial_transactions с аргументом: {path_file}")
 
     try:
+        # Проверяем, что загруженные данные являются списком
+        if not os.path.exists(path_file):
+            logger_utils.error(f"Файл {path_file} не найден. Возвращается пустой список.")
+            return []
+
         with open(path_file, "r", encoding="utf-8") as f_tr:
-            if f_tr is None:
-                data = json.load(f_tr)
-                logger_utils.warning(f'Файл {path_file} не открыт. Возвращается пустой список."')
-                return data
-            else:
-                data = json.load(f_tr)
-                logger_utils.info(f"Файл {path_file} успешно загружен.")
-                return data
-    except FileNotFoundError:
-        logger_utils.error(f"Файл {path_file} не найден. Возвращается пустой список.")
-        return []
+            data = json.load(f_tr)
+            if data is None:
+                logger_utils.warning(f"Файл {path_file} содержит null. Возвращается пустой список.")
+                return []
+            if not isinstance(data, list):
+                logger_utils.warning(
+                    f"Файл {path_file} содержит данные не в формате списка. Возвращается пустой список."
+                )
+                return []
+
+            logger_utils.info(f"Файл {path_file} успешно загружен.")
+            return data
     except json.JSONDecodeError:
         logger_utils.error(f"Некорректный формат JSON в файле {path_file}. Возвращается пустой список.")
         return []
-
-
-# получаем абсолютный путь к директории, содержащей utils.py
-utils_path = os.path.dirname(os.path.abspath(__file__))
-
-# получаем путь на 2 уровня выше чем utils файл
-project_root_path = os.path.dirname(os.path.abspath(utils_path))
-
-# объединяем путь к корню проекта с путем к файлу operations.json
-abs_path_file = os.path.join(project_root_path, "data", "operations.json")
-
-print(financial_transactions(abs_path_file))
+    except Exception as e:
+        logger_utils.error(
+            f"Произошла непредвиденная ошибка при чтении файла {path_file}: {e}. Возвращается пустой список."
+        )
+        return []

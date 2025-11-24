@@ -2,6 +2,7 @@ import os
 
 from src.transact_pd import (reading_transactions_csv,
                              reading_transactions_excel)
+from src.utils import financial_transactions
 from src.widget import get_date, mask_account_card
 
 path_json_file = os.path.join("data", "operations.json")
@@ -24,31 +25,21 @@ def main():
     # Работа с JSON-файлом
     if user_select_file == 1:
         print("Для обработки выбран JSON-файл")
-        print(
-            "Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"
-        )
-
-        df_csv = reading_transactions_csv(path_json_file)
-        df_state_json = []
+        df_json = financial_transactions(path_json_file)
         while True:
+            print(
+                "Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"
+            )
             user_select_filter = input().upper()
             if user_select_filter in ("EXECUTED", "CANCELED", "PENDING"):
-                if user_select_filter == "EXECUTED":
-                    for transaction in df_csv:
-                        if transaction["state"] == "EXECUTED":
-                            df_state_json.append(transaction)
-                elif user_select_filter == "CANCELED":
-                    for transaction in df_csv:
-                        if transaction["state"] == "CANCELED":
-                            df_state_json.append(transaction)
-                else:
-                    for transaction in df_csv:
-                        if transaction["state"] == "PENDING":
-                            df_state_json.append(transaction)
+                # Используем .get("state") для безопасного доступа
+                df_state_json = [
+                    transaction for transaction in df_json if transaction.get("state") == user_select_filter
+                ]
                 break
             else:
                 print(
-                    f"Ошибка: Некорректный статус '{user_select_filter}'. Пожалуйста, введите один из следующих: {('EXECUTED', 'CANCELED', 'PENDING')}"
+                    f"Ошибка: Некорректный статус '{user_select_filter}'. Пожалуйста, введите один из следующих: {'EXECUTED', 'CANCELED', 'PENDING'}"
                 )
 
         print("Отсортировать операции по дате? Да/Нет")
@@ -78,7 +69,9 @@ def main():
             if user_input in ("Да", "Нет"):
                 if user_input == "Да":
                     df_state_json = [
-                        transaction for transaction in df_state_json if transaction["currency_code"] == "RUB"
+                        transaction
+                        for transaction in df_state_json
+                        if transaction["operationAmount"]["currency"]["code"] == "RUB"
                     ]
                 else:
                     pass
@@ -106,18 +99,23 @@ def main():
         print(f"Всего банковских операций в выборке: {len(df_state_json)}")
         for transaction in df_state_json:
             transaction["date"] = get_date(transaction["date"])
-            if transaction["from"] != "":
-                transaction["from"] = mask_account_card(transaction["from"])
+            if "from" in transaction:
+                if transaction["from"] != "":
+                    transaction["from"] = mask_account_card(transaction["from"])
             transaction["to"] = mask_account_card(transaction["to"])
 
         for transaction in df_state_json:
             print(transaction["date"], transaction["description"])
-            if transaction["from"] != "":
+            if "from" in transaction:
                 print(transaction["from"] + " -> " + transaction["to"])
-                print(f"Сумма: {transaction['amount']} {transaction['currency_code']}\n")
+                print(
+                    f"Сумма: {transaction["operationAmount"]["amount"]} {transaction["operationAmount"]["currency"]["code"]}\n"
+                )
             else:
                 print(transaction["to"])
-                print(f"Сумма: {transaction['amount']} {transaction['currency_code']}\n")
+                print(
+                    f"Сумма: {transaction["operationAmount"]["amount"]} {transaction["operationAmount"]["currency"]["code"]}\n"
+                )
         if df_state_json == []:
             print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
 
